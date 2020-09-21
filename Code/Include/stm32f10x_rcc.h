@@ -90,6 +90,7 @@ typedef struct {
 } rcc_cr_struct;
 
 STATUS rcc_cr_val_set(rcc_cr_struct *p_val);
+STATUS rcc_cr_val_reset(rcc_cr_struct *p_val);
 
 /* RCC时钟配置寄存器基地址 */
 #define				RCC_CFGR                        (RCC_REGISTER + 0x00000004)

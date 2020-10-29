@@ -15,6 +15,8 @@ typedef struct _flash_reg {
     volatile uint32_t flash_wrpr;
 } flash_reg;
 
+#define FLASH_REG_PTR ((flash_reg *)((uint32_t)0x40022000))
+
 #endif /* __FLASH_DRIVER_H__ */
 
 

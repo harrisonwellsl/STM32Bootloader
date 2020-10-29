@@ -18,6 +18,7 @@ typedef struct _rcc_reg {
     volatile uint32_t rcc_csr;
 } rcc_reg;
 
+#define RCC_REG_PTR ((rcc_reg *)((uint32_t)0x40021000))
 
 void set_sys_clk_to_72(void);
 

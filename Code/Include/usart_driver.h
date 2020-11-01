@@ -21,6 +21,9 @@ typedef struct _usart_reg {
 
 #define USART ((usart_reg *)USART1)
 
+void usart_init(void);
+void stm32UsartPrintf(char *fmt, ...);
+
 #endif /* __USART_DRIVER_H__ */
 
 

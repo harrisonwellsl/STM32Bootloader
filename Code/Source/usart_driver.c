@@ -1,9 +1,24 @@
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
+#include <stddef.h>
+#include <stdlib.h>
 
 #include "sys_clk_init.h"
 #include "gpio_driver.h"
 #include "usart_driver.h"
+#include "core_driver.h"
+#include "global_define.h"
+#include "shell.h"
+
+#define BUFFER_SIZE 64
+
+extern cmd_func_count cmd_array[];
+
+static char buffer[BUFFER_SIZE] = {0};
+static int buffer_index = 0;
+static int direct_control = 0;
+//static int current_size = BUFFER_SIZE;
 
 static void usart_clk_init(void) {
     /* 开启GPIOA的时钟 */
@@ -35,10 +50,16 @@ static void usart_config_init(void) {
     USART->usart_gtpr |= 0x00000000;
 }
 
+static void usart_interrupt_init(void) {
+    set_nvic_int(37);
+    USART->usart_cr1 |= (uint32_t)0x00000020;
+}
+
 void usart_init(void) {
     usart_clk_init();
     usart_pin_init();
     usart_config_init();
+    usart_interrupt_init();
 }
 
 void stm32UsartPrintf(char *fmt, ...) {
@@ -55,5 +76,58 @@ void stm32UsartPrintf(char *fmt, ...) {
 }
 
 void USART1_IRQHandler(void) {
-    
+    buffer[buffer_index] = USART->usart_dr & 0xFF;
+    /* 如果收到回车，则说明命令已经输入完毕 */
+    if (buffer[buffer_index] == '\r') {
+        buffer[buffer_index] = '\0';
+        if (strlen(buffer) != 0) {
+            INFO("Get from usart: [%s], len = (%d)", buffer, strlen(buffer));
+            cmd_parse(buffer);
+        }
+        buffer_index = 0;
+        memset(buffer, 0x0, BUFFER_SIZE);
+        stm32UsartPrintf("\r\n--> ");
+    } else if (buffer[buffer_index] == 0x8) {
+        if (buffer_index > 0) {
+            stm32UsartPrintf("%c", buffer[buffer_index]);
+            stm32UsartPrintf(" ");
+            stm32UsartPrintf("%c", buffer[buffer_index]);
+            buffer[buffer_index] = '\0';
+            buffer[--buffer_index] = '\0';
+        }
+    } else if (buffer[buffer_index] == '\t') {
+        uint32_t index = 0;
+        uint32_t count = 0;
+        uint8_t array_index[256] = {0};
+        buffer[buffer_index] = '\0';
+        for (index = 0; cmd_array[index].cmd_func != NULL; ++index) {
+            if (strncmp(cmd_array[index].name, buffer, strlen(buffer) - 1) == 0) {
+                array_index[count++] = index;
+            }
+        }
+        if (count == 1) {
+            memset(buffer, 0x0, sizeof(buffer));
+            strcpy(buffer, cmd_array[array_index[0]].name);
+            buffer_index = strlen(buffer);
+            stm32UsartPrintf("\r--> %s", buffer);
+        } else {
+            stm32UsartPrintf("\r\n");
+            for (index = 0; index < count; index++) {
+                stm32UsartPrintf("%s\t", cmd_array[index].name);
+            }
+            stm32UsartPrintf("\r\n\r--> %s", buffer);
+        }
+        
+    } else if (buffer[buffer_index] == 0x18) {
+        /* 复位指令 */
+        WARNING("Now reset...");
+        __asm(" LDR R0, =0XE000ED0C");
+        __asm(" LDR R1, =0X05FA0004");
+        __asm(" STR R1, [R0]");
+        __asm(" B .");
+    } else {
+        /* 其余情况下打印收到的字符 */
+        stm32UsartPrintf("%c", buffer[buffer_index++]);
+    }
+        
 }

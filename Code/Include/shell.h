@@ -22,4 +22,5 @@ void print_ascii(void);
 void help(void);
 void cmd_parse(char *cmd);
 int read_reg(uint32_t arg_addr);
+void clear(void);
 #endif /* __SHELL_H__ */

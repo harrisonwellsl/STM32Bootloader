@@ -23,14 +23,14 @@ typedef struct _afio_reg {
     volatile uint32_t afio_mapr2;
 } afio_reg;
 
-#define GPIOA ((gpio_reg *)(uint32_t)0x40010800)
-#define GPIOB ((gpio_reg *)(uint32_t)0x40010C00)
-#define GPIOC ((gpio_reg *)(uint32_t)0x40011000)
-#define GPIOD ((gpio_reg *)(uint32_t)0x40011400)
-#define GPIOE ((gpio_reg *)(uint32_t)0x40011800)
-#define GPIOF ((gpio_reg *)(uint32_t)0x40011C00)
-#define GPIOG ((gpio_reg *)(uint32_t)0x40012000)
+#define GPIOA_REG_PTR ((gpio_reg *)(uint32_t)0x40010800)
+#define GPIOB_REG_PTR ((gpio_reg *)(uint32_t)0x40010C00)
+#define GPIOC_REG_PTR ((gpio_reg *)(uint32_t)0x40011000)
+#define GPIOD_REG_PTR ((gpio_reg *)(uint32_t)0x40011400)
+#define GPIOE_REG_PTR ((gpio_reg *)(uint32_t)0x40011800)
+#define GPIOF_REG_PTR ((gpio_reg *)(uint32_t)0x40011C00)
+#define GPIOG_REG_PTR ((gpio_reg *)(uint32_t)0x40012000)
 
-#define AFIO ((afio_reg *)(uint32_t)0x40010000)
+#define AFIO_REG_PTR ((afio_reg *)(uint32_t)0x40010000)
 
 #endif /* __GPIO_DRIVER_H__ */

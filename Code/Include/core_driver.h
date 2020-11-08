@@ -13,7 +13,7 @@ typedef struct _nvic_reg {
     volatile uint32_t nvic_icpr[3];
 } nvic_reg;
 
-#define NVIC ((nvic_reg *)(uint32_t)0xE000E100)
+#define NVIC_REG_PTR ((nvic_reg *)(uint32_t)0xE000E100)
 
 typedef struct _scb_reg {
     volatile uint32_t scb_cpuid;
@@ -25,7 +25,7 @@ typedef struct _scb_reg {
     volatile uint32_t scb_shpr1;
 } scb_reg;
 
-#define SCB ((scb_reg *)(uint32_t)0xE000ED00)
+#define SCB_REG_PTR ((scb_reg *)(uint32_t)0xE000ED00)
 
 void set_nvic_parity(void);
 void set_nvic_int(uint32_t irq_num);

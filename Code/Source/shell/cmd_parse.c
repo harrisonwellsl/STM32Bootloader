@@ -1,11 +1,12 @@
 #include "shell.h"
 
-static char cmd_after_parse[5][64] = {0};
+static char cmd_after_parse[5][32] = {0};
 
 cmd_func_count cmd_array[] = {
     {"help", (func)help, 0, "打印当前帮助信息"},
     {"print_ascii", (func)print_ascii, 0, "打印屏幕ASCII码"},
     {"read_reg", (func)read_reg, 1, "读取寄存器的值"},
+    {"clear", (func)clear, 0, "清除当前屏幕内容"},
     {NULL, NULL, NULL, NULL}
 };
 
@@ -31,7 +32,7 @@ void cmd_parse(char *cmd) {
                 break;
             }
             return_num = cmd_array[cmd_array_index].cmd_func((uint32_t)cmd_after_parse);
-            INFO("return = %d", return_num);
+            INFO("return = 0x%08X, value = %d", return_num, return_num);
             memset(cmd_after_parse, 0x0, sizeof(cmd_after_parse));
         }
     }

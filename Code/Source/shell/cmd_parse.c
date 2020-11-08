@@ -5,7 +5,9 @@ static char cmd_after_parse[5][32] = {0};
 cmd_func_count cmd_array[] = {
     {"help", (func)help, 0, "打印当前帮助信息"},
     {"print_ascii", (func)print_ascii, 0, "打印屏幕ASCII码"},
-    {"read_reg", (func)read_reg, 1, "读取寄存器的值"},
+    {"read_reg", (func)read_reg, 1, "读取指定寄存器的值，例如：read_reg 0x40021000"},
+    {"write_reg", (func)write_reg, 2, "向指定寄存器写入值，例如：write_reg 0x40021000 0x100"},
+    {"go", (func)go, 0, "运行APP"},
     {"clear", (func)clear, 0, "清除当前屏幕内容"},
     {NULL, NULL, NULL, NULL}
 };
@@ -27,8 +29,8 @@ void cmd_parse(char *cmd) {
          cmd_array[cmd_array_index].cmd_func != NULL;
          cmd_array_index++) {
         if (strcmp(cmd_array[cmd_array_index].name, cmd_after_parse[0]) == 0) {
-            if (index > cmd_array[cmd_array_index].arg_count) {
-                ERROR("[%s] get too many args.", cmd_array[cmd_array_index].name);
+            if (index != cmd_array[cmd_array_index].arg_count) {
+                ERROR("[%s] get wrong args.", cmd_array[cmd_array_index].name);
                 break;
             }
             return_num = cmd_array[cmd_array_index].cmd_func((uint32_t)cmd_after_parse);

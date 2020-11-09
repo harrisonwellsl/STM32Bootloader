@@ -23,6 +23,7 @@ void help(void);
 void cmd_parse(char *cmd);
 int read_reg(uint32_t arg_addr);
 int write_reg(uint32_t arg_addr);
+void show_mem(uint32_t arg_addr);
 void go(void);
 void clear(void);
 #endif /* __SHELL_H__ */

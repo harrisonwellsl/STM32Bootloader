@@ -7,6 +7,7 @@ cmd_func_count cmd_array[] = {
     {"print_ascii", (func)print_ascii, 0, "打印屏幕ASCII码"},
     {"read_reg", (func)read_reg, 1, "读取指定寄存器的值，例如：read_reg 0x40021000"},
     {"write_reg", (func)write_reg, 2, "向指定寄存器写入值，例如：write_reg 0x40021000 0x100"},
+    {"show_mem", (func)show_mem, 3, "打印一段连续内存空间，例如：show_mem 0x40021000 0x10 0x4"},
     {"go", (func)go, 0, "运行APP"},
     {"clear", (func)clear, 0, "清除当前屏幕内容"},
     {NULL, NULL, NULL, NULL}

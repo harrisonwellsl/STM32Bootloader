@@ -129,7 +129,10 @@ void USART1_IRQHandler(void) {
                 if ((index + 1) % 3 == 0)
                     stm32UsartPrintf("\r\n");
             }
-            stm32UsartPrintf("\r\n\r--> %s", buffer);
+            if ((index + 1) % 3 == 0)
+                stm32UsartPrintf("\r\n\r--> %s", buffer);
+            else
+                stm32UsartPrintf("\r--> %s", buffer);
         }
         
     } else if (buffer[buffer_index] == 0x18) { /* 软件复位 */

@@ -9,6 +9,8 @@
 #include "usart_driver.h"
 #include "global_define.h"
 
+#define PROMT "\r\n--> "
+
 typedef int (*func)(uint32_t);
 
 typedef struct _cmd_func_count {

@@ -86,7 +86,7 @@ void USART1_IRQHandler(void) {
         }
         buffer_index = 0;
         memset(buffer, 0x0, BUFFER_SIZE);
-        stm32UsartPrintf("\r\n--> ");
+        stm32UsartPrintf(PROMT);
     } else if (buffer[buffer_index] == 0x8) { /* 退格键的处理 */
         if (buffer_index > 0) {
             stm32UsartPrintf("%c", buffer[buffer_index]);
@@ -121,7 +121,7 @@ void USART1_IRQHandler(void) {
                 if ((index + 1) % 3 == 0)
                     stm32UsartPrintf("\r\n");
             }
-            stm32UsartPrintf("\r\n--> ");
+            stm32UsartPrintf(PROMT);
         } else {
             stm32UsartPrintf("\r\n");
             for (index = 0; index < count; index++) {
@@ -130,7 +130,7 @@ void USART1_IRQHandler(void) {
                     stm32UsartPrintf("\r\n");
             }
             if ((index + 1) % 3 == 0)
-                stm32UsartPrintf("\r\n\r--> %s", buffer);
+                stm32UsartPrintf("\r" PROMT "%s", buffer);
             else
                 stm32UsartPrintf("\r--> %s", buffer);
         }

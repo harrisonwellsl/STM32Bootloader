@@ -18,10 +18,10 @@ void SystemInit()
     stm32UsartPrintf("\r\n===================================");
     stm32UsartPrintf("\r\n");
     stm32UsartPrintf("\r\nShell compile time    %s-%s", __DATE__, __TIME__);
-    stm32UsartPrintf("\r\nShell version         %s", "v1.0");
-    stm32UsartPrintf("\r\nAuthor                %s", "harrison");
-    stm32UsartPrintf("\r\nEmail                 %s", "harrisonwellsl@outlook.com");
-    stm32UsartPrintf("\r\n--> ");
+    stm32UsartPrintf("\r\nShell version         v%s", MAJOR_VERSION "." MINOR_VERSION "-" SMALL_VERSION);
+    stm32UsartPrintf("\r\nAuthor                %s", AUTHOR);
+    stm32UsartPrintf("\r\nEmail                 %s", EMAIL);
+    stm32UsartPrintf(PROMT);
 }
 
 

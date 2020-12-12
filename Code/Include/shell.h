@@ -31,3 +31,4 @@ void *stm32_memcpy(uint32_t arg_addr);
 void go(void);
 void clear(void);
 #endif /* __SHELL_H__ */
+

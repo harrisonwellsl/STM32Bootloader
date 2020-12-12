@@ -2,7 +2,7 @@
 
 extern cmd_func_count cmd_array[];
 
-static char cmd_after_parse[5][32] = {0};
+static char cmd_after_parse[5][16] = {0};
 
 void cmd_parse(char *cmd) {
     int index = 0;

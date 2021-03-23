@@ -4,6 +4,9 @@ extern cmd_func_count cmd_array[];
 
 static char cmd_after_parse[5][16] = {0};
 
+/*
+ * 对命令的解析，向自定义的命令传输的参数数组
+ */
 void cmd_parse(char *cmd) {
     int index = 0;
     int cmd_array_index = 0;
@@ -11,6 +14,7 @@ void cmd_parse(char *cmd) {
     
     char *p_cmd = strtok(cmd, " ");
 
+    /* 将命令用空格分开 */
     while (p_cmd != NULL) {
         strcpy(cmd_after_parse[index++], p_cmd);
         p_cmd = strtok(NULL, " ");
